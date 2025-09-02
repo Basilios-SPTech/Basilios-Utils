@@ -1,0 +1,183 @@
+   * {
+       box-sizing: border-box;
+       margin: 0;
+       padding: 0;
+       font-family: "Montserrat", sans-serif;
+       font-weight: bold;
+   }
+
+   body {
+       display: flex;
+       justify-content: center;
+       align-items: center;
+       height: 100vh;
+       background: #f7f7f7;
+       position: relative;
+   }
+
+   body::before {
+       content: "";
+       position: fixed;
+       top: 0;
+       left: 0;
+       width: 100vw;
+       height: 100vh;
+       background-image: url(../assets/imagens/img.png);
+       background-size: cover;
+       background-position: center;
+       background-repeat: no-repeat;
+       filter: blur(1px);
+       z-index: -1;
+   }
+
+   .login-container {
+       width: 880px;
+       height: 450px;
+       display: flex;
+       border-radius: 10px;
+       overflow: hidden;
+       box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+       background: #fff;
+       transition: all 0.5s ease;
+       flex-direction: row;
+   }
+
+   .login-container.register {
+       width: 870px;
+       height: 450px;
+       flex-direction: row;
+   }
+
+   .login-left {
+       flex: 1;
+   }
+
+   .login-left img {
+       width: 100%;
+       height: 100%;
+       object-fit: cover;
+   }
+
+   .login-right {
+       flex: 1;
+       padding: 40px;
+       display: flex;
+       flex-direction: column;
+       justify-content: center;
+       transition: opacity 0.3s ease;
+       align-items: center;
+   }
+
+   .screen {
+       display: none;
+       width: 100%;
+   }
+
+   .screen.active {
+       display: block;
+   }
+
+   h2 {
+       text-align: center;
+       margin-bottom: 30px;
+       color: #333;
+       width: 100%;
+   }
+
+   #loginScreen input[type="text"],
+   #loginScreen input[type="password"],
+   #loginScreen input[type="email"] {
+       width: 100%;
+       padding: 12px 15px;
+       margin: 15px 0;
+       border: 1px solid #ccc;
+       border-radius: 5px;
+       font-size: 16px;
+   }
+
+   #signupScreen .form-container {
+       display: flex;
+       justify-content: space-between;
+       width: 100%;
+       max-width: 800px;
+       margin: 0 auto;
+       gap: 20px;
+   }
+
+   #signupScreen .user-container,
+   #signupScreen .address-container {
+       flex: 1;
+       display: flex;
+       flex-direction: column;
+   }
+
+   #signupScreen input[type="text"],
+   #signupScreen input[type="password"],
+   #signupScreen input[type="email"],
+   #signupScreen input[type="tel"] {
+       width: 100%;
+       padding: 10px 12px;
+       margin-bottom: 12px;
+       border: 1px solid #ccc;
+       border-radius: 5px;
+       font-size: 14px;
+       box-sizing: border-box;
+   }
+
+   label {
+       font-size: 14px;
+       display: flex;
+       align-items: center;
+   }
+
+   label input {
+       margin-right: 5px;
+   }
+
+   .forgot {
+       color: #000000;
+       font-weight: bold;
+       text-align: right;
+       font-size: 12px;
+       margin-bottom: 20px;
+       cursor: pointer;
+       text-decoration: underline;
+   }
+
+   button {
+       width: 50%;
+       max-width: 300px;
+       padding: 12px;
+       background: #111314;
+       border: none;
+       color: #fff;
+       font-size: 16px;
+       border-radius: 5px;
+       cursor: pointer;
+       margin-top: 20px;
+       transition: background 0.3s;
+       display: block;
+       margin-left: auto;
+       margin-right: auto;
+   }
+
+   button:hover {
+       background: #3a3f41;
+   }
+
+   .toggle-text {
+       color: #3d3d3d;
+       text-align: center;
+       font-size: 14px;
+       margin-top: 20px;
+       max-width: 800px;
+       margin-left: auto;
+       margin-right: auto;
+   }
+
+   .toggle-text a {
+       color: #040606;
+       text-decoration: underline;
+       font-weight: bold;
+       cursor: pointer;
+   }
