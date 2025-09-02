@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="./css/loginCadastro.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <title>Login</title>
+</head>
+
+<body>
+
+    <div id="loginContainer" class="login-container">
+        <div class="login-left">
+            <img src="./assets/imagens/logo.png" alt="Ilustração" />
+        </div>
+        <div class="login-right">
+
+            <!-- Tela de Login -->
+            <div id="loginScreen" class="screen active">
+                <h2>LOGIN</h2>
+                <input type="text" id="username" placeholder="Email" />
+                <input type="password" id="password" placeholder="Senha" />
+                <a href="#" class="forgot">Esqueceu a Senha?</a><br><br>
+
+                <button onclick="login()">Entrar</button>
+
+                <div class="toggle-text">
+                    Não Tem Uma Conta? <a onclick="showSignup()">Inscrever-se</a>
+                </div>
+            </div>
+
+            <!-- Tela de Cadastro -->
+            <div id="signupScreen" class="screen">
+                <h2>CADASTRO</h2>
+                <div class="form-container">
+                    <!-- Container usuário -->
+                    <div class="user-container">
+                        <input type="email" id="signupEmail" placeholder="Email" />
+                        <input type="password" id="signupPassword" placeholder="Senha" />
+                        <input type="password" id="signupConfirmPassword" placeholder="Confirmar senha" />
+                        <input type="tel" id="signupTelefone" placeholder="Telefone" />
+                        <input type="text" id="signupCPF" placeholder="CPF" />
+                    </div>
+
+                    <!-- Container endereço -->
+                    <div class="address-container">
+                        <input type="text" id="signupRua" placeholder="Rua" />
+                        <input type="text" id="signupNumero" placeholder="Número" />
+                        <input type="text" id="signupBairro" placeholder="Bairro" />
+                        <input type="text" id="signupComplemento" placeholder="Complemento" />
+                        <input type="text" id="signupCep" placeholder="CEP" />
+                    </div>
+                </div>
+
+                <button onclick="signup()">Cadastrar</button>
+
+                <div class="toggle-text">
+                    Já tem uma conta? <a onclick="showLogin()">Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const loginContainer = document.getElementById('loginContainer');
+        const loginScreen = document.getElementById('loginScreen');
+        const signupScreen = document.getElementById('signupScreen');
+
+        function showSignup() {
+            loginContainer.classList.add('register');
+            loginScreen.classList.remove('active');
+            signupScreen.classList.add('active');
+            document.querySelector('.login-left').style.display = 'none';
+        }
+
+        function showLogin() {
+            loginContainer.classList.remove('register');
+            signupScreen.classList.remove('active');
+            loginScreen.classList.add('active');
+            document.querySelector('.login-left').style.display = 'block';
+        }
+
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (username === "" || password === "") {
+                alert("Por favor, preencha todos os campos.");
+                return;
+            }
+
+            alert(`Bem-vindo, ${username}!`);
+        }
+
+        function signup() {
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            const confirmPassword = document.getElementById('signupConfirmPassword').value;
+            const telefone = document.getElementById('signupTelefone').value;
+            const cpf = document.getElementById('signupCPF').value;
+            const rua = document.getElementById('signupRua').value;
+            const numero = document.getElementById('signupNumero').value;
+            const bairro = document.getElementById('signupBairro').value;
+            const complemento = document.getElementById('signupComplemento').value;
+            const cep = document.getElementById('signupCep').value;
+
+            if (!email || !password || !confirmPassword || !telefone || !cpf || !rua || !numero || !bairro || !cep) {
+                alert("Por favor, preencha todos os campos obrigatórios.");
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                alert("As senhas não coincidem.");
+                return;
+            }
+
+            alert(`Usuário ${email} cadastrado com sucesso!`);
+            showLogin();
+        }
+    </script>
+
+</body>
+
+</html>
