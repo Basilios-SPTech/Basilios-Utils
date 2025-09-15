@@ -16,7 +16,7 @@ function showLogin() {
     document.querySelector('.login-left').style.display = 'block';
 }
 
-function login() {
+async function login() {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
@@ -25,7 +25,23 @@ function login() {
         return;
     }
 
-    alert(`Bem-vindo, ${username}!`);
+    try{
+        const response = await fetch('http://localhost:3000/clientes');
+        
+        if(response.ok){
+            const users = await response.json();
+            const user = users.find(u => u.email === username && u.senha === password);
+
+            if (user) {
+                alert(`Bem-vindo, ${username}!`);
+            } else {
+                alert("Usuário ou senha inválidos.");
+            }
+        }
+
+    }catch(e){
+        console.log(e)
+    }
 }
 
 async function signup() {
@@ -50,8 +66,19 @@ async function signup() {
         return;
     }
 
+    sanitizeInput(document.getElementById('signupEmail').value);
+    sanitizeInput(document.getElementById('signupPassword').value);
+    sanitizeInput(document.getElementById('signupConfirmPassword').value);
+
+    let forca = validatePassword(senha);
+
+    if (forca === 'fraca') {
+        alert("A senha é muito fraca. Por favor, escolha uma senha mais forte.");
+        return;
+    }
+
     try{
-        const response = await fetch('http://localhost:8080/clientes', {
+        const response = await fetch('http://localhost:3000/clientes', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

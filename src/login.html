@@ -24,7 +24,7 @@
             <div id="loginScreen" class="screen active">
                 <h2>LOGIN</h2>
                 <input type="text" id="username" placeholder="Email" />
-                <input type="password" id="password" placeholder="Senha" />
+                <input type="password" id="password" placeholder="Senha" onchange="validatePassword(this.value)"/>
                 <a href="#" class="forgot">Esqueceu a Senha?</a><br><br>
 
                 <button onclick="login()">Entrar</button>
@@ -65,65 +65,9 @@
             </div>
         </div>
     </div>
-
-    <script>
-        const loginContainer = document.getElementById('loginContainer');
-        const loginScreen = document.getElementById('loginScreen');
-        const signupScreen = document.getElementById('signupScreen');
-
-        function showSignup() {
-            loginContainer.classList.add('register');
-            loginScreen.classList.remove('active');
-            signupScreen.classList.add('active');
-            document.querySelector('.login-left').style.display = 'none';
-        }
-
-        function showLogin() {
-            loginContainer.classList.remove('register');
-            signupScreen.classList.remove('active');
-            loginScreen.classList.add('active');
-            document.querySelector('.login-left').style.display = 'block';
-        }
-
-        function login() {
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-
-            if (username === "" || password === "") {
-                alert("Por favor, preencha todos os campos.");
-                return;
-            }
-
-            alert(`Bem-vindo, ${username}!`);
-        }
-
-        function signup() {
-            const email = document.getElementById('signupEmail').value;
-            const password = document.getElementById('signupPassword').value;
-            const confirmPassword = document.getElementById('signupConfirmPassword').value;
-            const telefone = document.getElementById('signupTelefone').value;
-            const cpf = document.getElementById('signupCPF').value;
-            const rua = document.getElementById('signupRua').value;
-            const numero = document.getElementById('signupNumero').value;
-            const bairro = document.getElementById('signupBairro').value;
-            const complemento = document.getElementById('signupComplemento').value;
-            const cep = document.getElementById('signupCep').value;
-
-            if (!email || !password || !confirmPassword || !telefone || !cpf || !rua || !numero || !bairro || !cep) {
-                alert("Por favor, preencha todos os campos obrigatórios.");
-                return;
-            }
-
-            if (password !== confirmPassword) {
-                alert("As senhas não coincidem.");
-                return;
-            }
-
-            alert(`Usuário ${email} cadastrado com sucesso!`);
-            showLogin();
-        }
-    </script>
-
+    
+    <script src="./script/utils.js"></script>
+    <script src="./script/script.js"></script>
 </body>
 
 </html>
