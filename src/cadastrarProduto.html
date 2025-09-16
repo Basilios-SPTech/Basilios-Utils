@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basilios - Cadastrar Produtos</title>
+    <link rel="stylesheet" href="./css/cadastrarProduto.css">
+</head>
+<body>
+    
+</body>
+</html>
+<div class="container">
+    <header class="cabecalho">
+        <h1 class="titulo-principal">Basilios</h1>
+    </header>
+
+    <!-- Formulário para Cadastro/Edição -->
+    <div class="formulario">
+        <h2 id="titulo-form" class="titulo-formulario">Cadastrar Produtos</h2>
+        <form id="form-produto" class="espaco">
+            <div class="gradegrade">
+                <input type="text" id="nome" placeholder="Nome do Produto" class="campoborda" required />
+                <input type="text" id="descricao" placeholder="Descrição" class="campoborda" required />
+            </div>
+            <div class="grade grade-1-2 gap-4">
+                <input type="number" id="preco" placeholder="Preço (R$)" step="0.01" class="campoborda" required />
+                <input type="url" id="imagem" placeholder="URL da Imagem" class="campoborda" />
+            </div>
+            <div class="flex gap-4">
+                <button type="submit" class="btn-salvar">Salvar Produto</button>
+                <button type="button" id="btn-cancelar" class="btn-cancelar">Cancelar</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Lista de Produtos -->
+    <div class="lista-produtos">
+        <h2 class="titulo-lista">Produtos Cadastrados</h2>
+        <div id="lista-produtos" class="gradegrade">
+        </div>
+        <div id="msg-sem-produtos" class="msg-sem-produtos">Nenhum produto cadastrado ainda.</div>
+    </div>
+</div>
+
+<script>
+    const CHAVE_STORAGE = 'produtos-basilios';
+
+    const form = document.getElementById('form-produto');
+    const tituloForm = document.getElementById('titulo-form');
+    const inputNome = document.getElementById('nome');
+    const inputDescricao = document.getElementById('descricao');
+    const inputPreco = document.getElementById('preco');
+    const inputImagem = document.getElementById('imagem');
+    const btnCancelar = document.getElementById('btn-cancelar');
+    const listaProdutos = document.getElementById('lista-produtos');
+    const msgSemProdutos = document.getElementById('msg-sem-produtos');
+
+    let indiceEdicao = null;
+
+    let produtos = JSON.parse(localStorage.getItem(CHAVE_STORAGE)) || [];
+
+    function renderizarProdutos() {
+        listaProdutos.innerHTML = '';
+        if (produtos.length === 0) {
+            msgSemProdutos.classList.remove('oculto');
+        } else {
+            msgSemProdutos.classList.add('oculto');
+            produtos.forEach((produto, i) => {
+                const card = document.createElement('div');
+                card.className = 'card-produto bg-gray-50 arredondado p-4 sombra';
+                card.innerHTML = `
+                    <img src="${produto.imagem || 'https://placehold.co/400x300/orange/'}" alt="Produto: ${produto.nome}" class="w-full h-48 objeto-cobrir arredondado mb-4" onerror="this.src='https://placehold.co/400x300/orange/white?text=Imagem+Indisponivel'">
+                    <h3 class="texto-lg fonte-negrito texto-cinza-escuro">${produto.nome}</h3>
+                    <p class="texto-cinza mb-2">${produto.descricao}</p>
+                    <p class="texto-vermelho fonte-semibold texto-lg">R$ ${produto.preco}</p>
+                    <div class="flex gap-2 mt-4">
+                        <button onclick="editarProduto(${i})" class="btn-editar bg-azul-600 texto-branco px-4 py-2 arredondado hover-azul">Editar</button>
+                        <button onclick="deletarProduto(${i})" class="btn-deletar bg-vermelho-600 texto-branco px-4 py-2 arredondado hover-vermelho">Deletar</button>
+                    </div>
+                `;
+                listaProdutos.appendChild(card);
+            });
+        }
+    }
+
+    function salvarProduto() {
+        const nome = inputNome.value.trim();
+        const descricao = inputDescricao.value.trim();
+        const preco = parseFloat(inputPreco.value);
+        const imagem = inputImagem.value.trim();
+
+        if (!nome || !descricao || isNaN(preco)) {
+            alert('Preencha todos os campos obrigatórios.');
+            return;
+        }
+
+        const produto = { nome, descricao, preco, imagem };
+
+        if (indiceEdicao !== null) {
+            produtos[indiceEdicao] = produto;
+            indiceEdicao = null;
+        } else {
+            produtos.push(produto);
+        }
+
+        salvarStorage();
+        resetarFormulario();
+        renderizarProdutos();
+    }
+
+    function editarProduto(i) {
+        const produto = produtos[i];
+        inputNome.value = produto.nome;
+        inputDescricao.value = produto.descricao;
+        inputPreco.value = produto.preco;
+        inputImagem.value = produto.imagem;
+        indiceEdicao = i;
+        tituloForm.textContent = 'Editar Produto';
+        btnCancelar.classList.remove('oculto');
+    }
+
+    function deletarProduto(i) {
+        if (confirm('Tem certeza que deseja deletar este produto?')) {
+            produtos.splice(i, 1);
+            salvarStorage();
+            renderizarProdutos();
+        }
+    }
+
+    function cancelarEdicao() {
+        resetarFormulario();
+        indiceEdicao = null;
+    }
+
+    function resetarFormulario() {
+        form.reset();
+        tituloForm.textContent = 'Cadastrar Novo Produto';
+        btnCancelar.classList.add('oculto');
+    }
+
+    function salvarStorage() {
+        localStorage.setItem(CHAVE_STORAGE, JSON.stringify(produtos));
+    }
+
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        salvarProduto();
+    });
+
+    btnCancelar.addEventListener('click', cancelarEdicao);
+
+    document.addEventListener('DOMContentLoaded', renderizarProdutos);
+</script>
