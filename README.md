@@ -21,3 +21,7 @@ Documentação e artefatos de arquitetura do projeto **Basilios** (plataforma de
 ## Licença
 
 MIT — veja [LICENSE](LICENSE).
+
+---
+
+Mantido sob a organização [Basilios-SPTech](https://github.com/Basilios-SPTech).
